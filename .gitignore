@@ -1,6 +1,6 @@
 
-src/Cbe-Santas-API/bin/*
-obj/
+SecretSanta/bin/*
+SecretSanta/obj/*
 
 *.user
 *.suo
