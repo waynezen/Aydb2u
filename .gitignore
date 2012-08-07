@@ -1,0 +1,8 @@
+
+src/Cbe-Santas-API/bin/*
+obj/
+
+*.user
+*.suo
+
+packages
