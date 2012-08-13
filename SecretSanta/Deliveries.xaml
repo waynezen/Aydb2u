@@ -1,0 +1,67 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="SecretSanta.Deliveries"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+   
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="TitlePanel" Margin="12,17,0,28" Grid.Column="1" Grid.Row="0">
+            <TextBlock x:Name="ApplicationTitle" Text="Secret Santa" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <Grid x:Name="TitleGrid" Width="Auto">
+                <TextBlock x:Name="PageTitle" Text="Deliveries" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="64" VerticalAlignment="Bottom" />
+                <Image Width="100" Height="100" Name="imageChristmasBureau" Stretch="Fill"  Source="/SecretSanta;component/Images/Santa-256.png" HorizontalAlignment="Right" />
+            </Grid>
+        </StackPanel>
+        <ListBox Name="DeliveryList" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" >
+            <ListBox.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Click="DeliveryAddressButton_Click" BorderThickness="0">
+                        <Button.Content>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Image}" Height="80" Grid.Row="0" Grid.Column="0" Margin="0,0,10,0"/>
+                                <TextBlock FontSize="22" Text="{Binding Address}" Height="80" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="0" Grid.Column="1"></TextBlock>
+                                <TextBlock FontSize="22" Text="{Binding Distance}" Height="80" Grid.Row="0" Grid.Column="2" ></TextBlock>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png" Text="Add Address" Click="ApplicationBarIconAddDeliveryButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png" Text="Refresh"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.questionmark.rest.png" Text="Help"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

@@ -1,45 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Tasks;
-using System.Device.Location;
 
 namespace SecretSanta
 {
     public partial class RegisterDevice : PhoneApplicationPage
     {
+        private IsolatedStorageSettings settings; 
         // Constructor
         public RegisterDevice()
         {
             InitializeComponent();
+            settings = IsolatedStorageSettings.ApplicationSettings;
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var settings = IsolatedStorageSettings.ApplicationSettings;
             if (!settings.Contains("DeviceId"))
             {
-                progressBar.Visibility = Visibility.Collapsed;
-                textBlockStatus.Text = "Device Registered";
-                //TODO: Wait a second, then open next page
+                BackgroundWorker bg = new BackgroundWorker();
+                bg.DoWork += new DoWorkEventHandler(GetDeviceId);
+                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_GetDeviceIdComplete);
+                bg.RunWorkerAsync();
             }
             else
             {
-                
-                progressBar.Visibility = Visibility.Collapsed;
-                textBlockStatus.Text = "Device Registered";
+                Navigate();
             }
+        }
+
+        void GetDeviceId(object sender, DoWorkEventArgs args)
+        {
+                object uniqueID;
+                string deviceID = "";
+                if (Microsoft.Phone.Info.DeviceExtendedProperties.TryGetValue("DeviceUniqueID", out uniqueID) == true)
+                {
+                    byte[] bID = (byte[])uniqueID;
+                    deviceID = Convert.ToBase64String(bID);   // There you go
+                }
+
+                if (string.IsNullOrEmpty(deviceID))
+                {
+                    deviceID = Guid.NewGuid().ToString();
+                }
+
+                settings.Add("DeviceId", deviceID);
+                System.Threading.Thread.Sleep(6000);
 
         }
+
+        void bg_GetDeviceIdComplete(object sender, RunWorkerCompletedEventArgs args)
+        {
+            ProgressBar.Visibility = Visibility.Collapsed;
+            BlockStatus.Text = "Device Registered";
+
+            Navigate();
+        }
+
+        void Navigate()
+        {
+            // Choose where to navigate
+            NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+            //NavigationService.Navigate(new Uri("/CheckIn.xaml", UriKind.Relative));
+        }
+
     }
 }
