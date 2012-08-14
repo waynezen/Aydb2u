@@ -4,6 +4,8 @@ using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
+using System.Diagnostics;
+using Microsoft.Xna.Framework.Media;
 
 namespace SecretSanta
 {
@@ -21,6 +23,9 @@ namespace SecretSanta
         {
             if (!settings.Contains("DeviceId"))
             {
+                BlockStatus.Visibility = System.Windows.Visibility.Visible;
+                ProgressBar.Visibility = System.Windows.Visibility.Visible;
+
                 BackgroundWorker bg = new BackgroundWorker();
                 bg.DoWork += new DoWorkEventHandler(GetDeviceId);
                 bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_GetDeviceIdComplete);
@@ -48,6 +53,7 @@ namespace SecretSanta
                 }
 
                 settings.Add("DeviceId", deviceID);
+                settings.Save();
                 System.Threading.Thread.Sleep(6000);
 
         }
@@ -62,9 +68,20 @@ namespace SecretSanta
 
         void Navigate()
         {
-            // Choose where to navigate
-            NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
-            //NavigationService.Navigate(new Uri("/CheckIn.xaml", UriKind.Relative));
+            // Choose where to Go
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            
+            string sessionKey = "";
+            var results = settings.TryGetValue<string>("SessionKey", out sessionKey);
+
+            if (string.IsNullOrEmpty(sessionKey))
+            {
+                NavigationService.Navigate(new Uri("/CheckIn.xaml", UriKind.Relative));
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+            }
         }
 
     }

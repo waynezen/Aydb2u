@@ -12,6 +12,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Diagnostics;
+using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 namespace SecretSanta
 {
@@ -63,6 +66,33 @@ namespace SecretSanta
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            LoadImages();
+        }
+
+
+        [Conditional("DEBUG")]
+        private void LoadImages()
+        {
+            string[] filePaths = new string[5];
+            filePaths[0] = @"Images\TestingImages\authentication-key-1-data-matrix.jpg";
+            filePaths[1] = @"Images\TestingImages\authentication-key-1-QR.jpg";
+            filePaths[2] = @"Images\TestingImages\12-3D63EEA2.jpg";
+            filePaths[3] = @"Images\TestingImages\12-3D243CD0.jpg";
+            filePaths[4] = @"Images\TestingImages\12-3BF4F6E4.jpg";
+
+            var myMediaLibrary = new MediaLibrary();
+
+            foreach (var filePath in filePaths)
+            {
+                var name = System.IO.Path.GetFileName(filePath);
+                var myUri = new Uri(filePath, UriKind.RelativeOrAbsolute);
+
+                var stream = App.GetResourceStream(myUri).Stream;
+                //var buffer = new byte[stream.Length];
+
+                //stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
+                myMediaLibrary.SavePicture(name, stream);
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)

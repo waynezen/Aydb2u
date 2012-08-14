@@ -26,15 +26,12 @@ namespace SecretSanta
 
             LabeledMapLocation originatingLocation;
             var currentLocation = new GeoCoordinateWatcher(GeoPositionAccuracy.Default).Position;
-            if (currentLocation != null && !currentLocation.Location.IsUnknown )
+            if (currentLocation == null || currentLocation.Location.IsUnknown)
             {
-                originatingLocation = new LabeledMapLocation("Current Location", currentLocation.Location); 
+                currentLocation.Location = new GeoCoordinate(53.579022, -113.522769);
             }
-            else
-            {
-                // Testing Address West Edmonton Mall
-                originatingLocation = new LabeledMapLocation("8882 170 Street Northwest, Edmonton, AB T5T 4J2", null);
-            }
+
+            originatingLocation = new LabeledMapLocation("Current Location", currentLocation.Location); 
 
             var desintation = new LabeledMapLocation(selectedDelivery.Address, null);
 

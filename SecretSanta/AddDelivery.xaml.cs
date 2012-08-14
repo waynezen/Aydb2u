@@ -23,6 +23,8 @@ using System.IO.IsolatedStorage;
 using System.IO;
 using SecretSanta.CustomClasses;
 using SecretSanta.Storage;
+using System.Text;
+using System.Runtime.Serialization.Json;
 
 namespace SecretSanta
 {
@@ -173,7 +175,7 @@ namespace SecretSanta
         {
             if (result != null)
             {
-                AddNewDelivery(result.Text);
+                GetDeliveryWeb(result.Text);
             }
             else
             {
@@ -183,19 +185,40 @@ namespace SecretSanta
 
         private void AddNewDelivery( string deliveryId )
         {
-            // 1 Validate message
-            if (1 == 2)
+
+           GetDeliveryWeb(deliveryId);
+            
+            // Return to Deliveries Page
+            //NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+        }
+
+        private void GetDeliveryWeb(string deliveryId)
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            string sessionKey = (string)settings["SessionKey"];
+
+            var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Deliveries/" + deliveryId + "&key=" + sessionKey);
+            request.Method = "GET";
+
+            request.BeginGetResponse(GetDeliveryWeb_Completed, request);
+        }
+
+        private void GetDeliveryWeb_Completed(IAsyncResult result)
+        {
+            var request = (HttpWebRequest)result.AsyncState;
+            var response = (HttpWebResponse)request.EndGetResponse(result);
+
+            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
             {
-                Message.Text = "Invalid Delivery";
+                string responseString = streamReader.ReadToEnd();
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responseString)))
+                {
+                    //var ser = new DataContractJsonSerializer(typeof(CheckInResult));
+                    //var checkInResult = (CheckInResult)ser.ReadObject(ms);
+                }
             }
 
-            var delivery = DeliveryData.GetDelivery(deliveryId);
-
-            // Save Updated List
-            DeliveryData.SaveDeliveryToLocal(delivery);
-
-            // Return to Deliveries Page
-            NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+            Deployment.Current.Dispatcher.BeginInvoke(() => { NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative)); });
         }
 
     }

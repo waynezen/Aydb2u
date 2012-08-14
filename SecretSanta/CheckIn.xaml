@@ -51,6 +51,14 @@
                 <Button x:Name="OpenImageButton" Content="Open" Click="OpenImageButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" />
                 <Button x:Name="CheckInButton" Content="Check In" Click="CheckInButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" Grid.Column="2" />
             </Grid>
+            <Grid x:Name="ProgressMeter" Background="Transparent" Visibility="Collapsed" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ProgressBar Name="ProgressBar" IsIndeterminate="True" Grid.Row="0" VerticalAlignment="Bottom" Margin="0,10,0,0" Height="21" HorizontalAlignment="Center" Width="268" />
+                <TextBlock Name="BlockStatus" HorizontalAlignment="Center" Text="Checking In..." Grid.Row="1" VerticalAlignment="Bottom" />
+            </Grid>
             <TextBlock x:Name="Message" FontSize="26" MinHeight="80" TextWrapping="Wrap" />
         </StackPanel>
     </Grid>

@@ -1,18 +1,23 @@
-﻿using System.Windows;
-using Microsoft.Phone;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Tasks;
-using System;
-using System.IO;
-using System.Diagnostics;
-using System.Windows.Media.Imaging;
+﻿using System;
 using System.ComponentModel;
+using System.IO.IsolatedStorage;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using Microsoft.Devices;
-using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 using ZXing;
 using ZXing.Common;
-
+using System.Net;
+using System.IO;
+using System.Xml;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using SecretSanta.CustomClasses;
 
 namespace SecretSanta
 {
@@ -168,7 +173,10 @@ namespace SecretSanta
          {
             barcodeType = result.BarcodeFormat.ToString();
             barcodeContent = result.Text;
-            CheckInLogic();
+            CheckInWeb(barcodeContent);
+
+            LayoutButtons.Visibility = System.Windows.Visibility.Collapsed;
+            ProgressMeter.Visibility = System.Windows.Visibility.Visible;
          }
          else
          {
@@ -176,13 +184,59 @@ namespace SecretSanta
          }
       }
 
-      private void CheckInLogic()
+      private void CheckInWeb(string checkinBarcodeValue)
       {
-          // do check in code
-          // if successful then navigate to Delivery
-          NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+          try
+          {
+              var settings = IsolatedStorageSettings.ApplicationSettings;
+              string deviceId = (string)settings["DeviceId"];
+
+
+              var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Sessions?deviceId=" + deviceId + "&authenticationKey=" + checkinBarcodeValue);
+              request.Method = "POST";
+
+
+              request.BeginGetResponse(CheckInWeb_Completed, request);
+          }
+          catch (Exception ex)
+          {
+              Message.Text = "Could not connect to Internet.";
+              
+              LayoutButtons.Visibility = System.Windows.Visibility.Visible;
+              ProgressMeter.Visibility = System.Windows.Visibility.Collapsed;
+          }
+      }
+
+      private void CheckInWeb_Completed(IAsyncResult result)
+      {
+          try
+          {
+              var request = (HttpWebRequest)result.AsyncState;
+              var response = (HttpWebResponse)request.EndGetResponse(result);
+
+              using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+              {
+                  string responseString = streamReader.ReadToEnd();
+                  using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responseString)))
+                  {
+                      var ser = new DataContractJsonSerializer(typeof(CheckInResult));
+                      var checkInResult = (CheckInResult)ser.ReadObject(ms);
+
+                      var settings = IsolatedStorageSettings.ApplicationSettings;
+                      settings.Add("SessionKey", checkInResult.Key);
+                      settings.Save();
+                  }
+              }
+
+              Deployment.Current.Dispatcher.BeginInvoke(() => { NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative)); });
+          }
+          catch (Exception ex)
+          {
+              Message.Text = "Invalid Barcode. Please try again.";
+              LayoutButtons.Visibility = System.Windows.Visibility.Visible;
+              ProgressMeter.Visibility = System.Windows.Visibility.Collapsed;
+          }
       }
 
     }
-
 }
