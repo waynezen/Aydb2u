@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
+using Microsoft.Phone.Tasks;
+using System.Device.Location;
 
 namespace SecretSanta.CustomClasses
 {
@@ -17,8 +19,10 @@ namespace SecretSanta.CustomClasses
     {
         [DataMember]
         public string Id { get; set; }
+        
         [DataMember]
-        public string Status { get; set; }
+        public int Status { get; set; }
+        
         public string Image
         {
             get
@@ -26,36 +30,41 @@ namespace SecretSanta.CustomClasses
                 string result ="";
                 switch (Status)
                 {
-                    case "":
+                    case 0:
                         result= "Images/gift-yellow.png";
                         break;
-                    case "Delivered":
+                    case 2:
                         result = "Images/gift.png";
                         break;
-                    case "Undelivered":
+                    case 1:
                         result = "Images/gift-red.png";
                         break;
                 }
                 return result;
             }
-            set
-            {
-            }
         }
+        
         [DataMember]
-        public string Address { get; set; }
+        public Address Address { get; set; }
+
         public string Distance
         {
             get
             {
-                return "10 km";
-            }
-            set
-            {
+                //var currentLocation = new GeoCoordinateWatcher(GeoPositionAccuracy.Default).Position;
+                //if (currentLocation == null || currentLocation.Location.IsUnknown)
+                //{
+                //    currentLocation.Location = new GeoCoordinate(53.579022, -113.522769);
+                //}
+
+                //var destination = new LabeledMapLocation(Address, null);
+
+                //return currentLocation.Location.GetDistanceTo(destination.Location);
+                return "10 KM";
             }
         }
 
-        public Delivery(string id, string status, string address)
+        public Delivery(string id, int status, Address address)
         {
             Id = id;
             Status = status;

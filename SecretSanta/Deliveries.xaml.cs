@@ -33,7 +33,7 @@ namespace SecretSanta
 
             originatingLocation = new LabeledMapLocation("Current Location", currentLocation.Location); 
 
-            var desintation = new LabeledMapLocation(selectedDelivery.Address, null);
+            var desintation = new LabeledMapLocation(selectedDelivery.Address.ToString(), null);
 
             mapDirectionsTask.Start = originatingLocation;
             mapDirectionsTask.End = desintation;

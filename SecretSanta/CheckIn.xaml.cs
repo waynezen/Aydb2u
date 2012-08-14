@@ -232,9 +232,9 @@ namespace SecretSanta
           }
           catch (Exception ex)
           {
-              Message.Text = "Invalid Barcode. Please try again.";
-              LayoutButtons.Visibility = System.Windows.Visibility.Visible;
-              ProgressMeter.Visibility = System.Windows.Visibility.Collapsed;
+              Deployment.Current.Dispatcher.BeginInvoke(() => { Message.Text = "Invalid Barcode. Please try again."; });
+              Deployment.Current.Dispatcher.BeginInvoke(() => { LayoutButtons.Visibility = System.Windows.Visibility.Visible; });
+              Deployment.Current.Dispatcher.BeginInvoke(() => { ProgressMeter.Visibility = System.Windows.Visibility.Collapsed; });
           }
       }
 

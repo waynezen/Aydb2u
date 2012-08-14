@@ -187,9 +187,7 @@ namespace SecretSanta
         {
 
            GetDeliveryWeb(deliveryId);
-            
-            // Return to Deliveries Page
-            //NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative));
+           
         }
 
         private void GetDeliveryWeb(string deliveryId)
@@ -197,7 +195,7 @@ namespace SecretSanta
             var settings = IsolatedStorageSettings.ApplicationSettings;
             string sessionKey = (string)settings["SessionKey"];
 
-            var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Deliveries/" + deliveryId + "&key=" + sessionKey);
+            var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Deliveries/" + deliveryId + "?key=" + sessionKey);
             request.Method = "GET";
 
             request.BeginGetResponse(GetDeliveryWeb_Completed, request);
@@ -213,8 +211,10 @@ namespace SecretSanta
                 string responseString = streamReader.ReadToEnd();
                 using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responseString)))
                 {
-                    //var ser = new DataContractJsonSerializer(typeof(CheckInResult));
-                    //var checkInResult = (CheckInResult)ser.ReadObject(ms);
+                    var ser = new DataContractJsonSerializer(typeof(Delivery));
+                    var deliveryResult = (Delivery)ser.ReadObject(ms);
+
+                    DeliveryData.SaveDeliveryToLocal(deliveryResult);
                 }
             }
 

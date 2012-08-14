@@ -22,7 +22,7 @@ namespace SecretSanta.Storage
     {
         public static List<Delivery> GetDeliveriesLocal()
         {
-            var results = IsoStoreHelper.LoadList<Delivery>("", "SSDeliveryList.txt");           
+            var results = IsoStoreHelper.LoadList<Delivery>("", "SSDeliveryList.txt");
             return results;
         }
 
