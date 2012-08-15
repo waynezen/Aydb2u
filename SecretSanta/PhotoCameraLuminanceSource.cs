@@ -10,6 +10,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ZXing;
 
+
+
+
 namespace SecretSanta
 {
     public class PhotoCameraLuminanceSource : LuminanceSource
