@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Resources;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -12,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
 
@@ -66,7 +67,13 @@ namespace SecretSanta
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            LoadImages();
+			// get local resources
+			LocalResource lr = LocalResource.GetInstance;
+			// 2012/08/19 WSP: WebAPIUrl not used yet
+			Debug.WriteLine("WebAPIUrl = {0}", lr.WebAPIUrl);
+
+
+			LoadImages();
         }
 
 
