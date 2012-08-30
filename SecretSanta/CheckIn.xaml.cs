@@ -37,6 +37,21 @@ namespace SecretSanta
         public CheckIn()
         {
             InitializeComponent();
+
+            bool isDebug = false;
+#if DEBUG
+            isDebug = true;
+#endif
+
+            if (isDebug)
+            {
+                CheckInButton.Click += new RoutedEventHandler(OpenImageButton_Click);
+            }
+            else
+            {
+                CheckInButton.Click += new RoutedEventHandler(CheckInButton_Click);
+            }
+
             
             // prepare Photo Chooser Task for the open button
              photoChooserTask = new PhotoChooserTask();

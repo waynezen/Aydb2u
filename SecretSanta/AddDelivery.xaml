@@ -46,10 +46,8 @@
             <Grid x:Name="LayoutButtons" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="OpenImageButton" Content="Open" Click="OpenImageButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" />
-                <Button x:Name="AddDeliveryButton" Content="Add Delivery" Click="AddDeliveryButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" Grid.Column="2" />
+                <Button x:Name="AddDeliveryButton" Content="Add Delivery" Click="AddDeliveryButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" Width="250" />
             </Grid>
             <TextBlock x:Name="Message" FontSize="26" MinHeight="80" TextWrapping="Wrap" />
         </StackPanel>

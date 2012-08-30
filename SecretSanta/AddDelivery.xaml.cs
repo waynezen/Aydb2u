@@ -41,6 +41,20 @@ namespace SecretSanta
         public AddDelivery()
         {
             InitializeComponent();
+
+            bool isDebug = false;
+#if DEBUG
+            isDebug = true;
+#endif
+
+            if (isDebug)
+            {
+                AddDeliveryButton.Click += new RoutedEventHandler(OpenImageButton_Click);
+            }
+            else
+            {
+                AddDeliveryButton.Click += new RoutedEventHandler(AddDeliveryButton_Click);
+            }
             
             // prepare Photo Chooser Task for the open button
              photoChooserTask = new PhotoChooserTask();

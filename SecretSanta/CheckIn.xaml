@@ -46,10 +46,8 @@
             <Grid x:Name="LayoutButtons" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="OpenImageButton" Content="Open" Click="OpenImageButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" />
-                <Button x:Name="CheckInButton" Content="Check In" Click="CheckInButton_Click" FontSize="26" FontWeight="ExtraBold" Height="75" Grid.Column="2" />
+                <Button x:Name="CheckInButton" Content="Check In" FontSize="26" FontWeight="ExtraBold" Height="75" Width="250" />
             </Grid>
             <Grid x:Name="ProgressMeter" Background="Transparent" Visibility="Collapsed" >
                 <Grid.RowDefinitions>
