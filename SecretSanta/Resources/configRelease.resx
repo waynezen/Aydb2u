@@ -118,10 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DeviceID" xml:space="preserve">
-    <value>f0e41985566444ae9e814ddd00554d56</value>
+    <value />
   </data>
   <data name="WebAPIUrl" xml:space="preserve">
     <value>http://a273ae8c17854d5bace8d740642081f6.cloudapp.net/</value>
-    <comment>For local development, use: http://localhost:81/</comment>
   </data>
 </root>

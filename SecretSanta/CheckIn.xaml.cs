@@ -34,6 +34,8 @@ namespace SecretSanta
         private string barcodeType;
         private string barcodeContent;
 
+		private LocalResource _localResx = null;
+
         public CheckIn()
         {
             InitializeComponent();
@@ -71,6 +73,9 @@ namespace SecretSanta
                                             var bmp = (BitmapImage) s;
                                             scannerWorker.RunWorkerAsync(new WriteableBitmap(bmp));
                                          };
+
+			 // get local resources
+			 _localResx = LocalResource.GetInstance;
         }
 
         void scannerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -207,7 +212,7 @@ namespace SecretSanta
               string deviceId = (string)settings["DeviceId"];
 
 
-              var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Sessions?deviceId=" + deviceId + "&authenticationKey=" + checkinBarcodeValue);
+              var request = HttpWebRequest.Create(_localResx.WebAPIUrl + "api/Sessions?deviceId=" + deviceId + "&authenticationKey=" + checkinBarcodeValue);
               request.Method = "POST";
 
 

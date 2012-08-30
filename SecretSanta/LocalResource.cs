@@ -18,6 +18,7 @@ namespace SecretSanta
 	public interface ILocalResource
 	{
 		string WebAPIUrl { get; }
+		string DeviceID { get; }
 
 	}
 
@@ -34,7 +35,7 @@ namespace SecretSanta
 
 		private ResourceManager _rm = null;
 
-#region Singleton stuff
+		#region Singleton stuff
 		// Default constructor is private - so class can't be instanciated with "new"
 		private LocalResource()
 		{
@@ -88,8 +89,9 @@ namespace SecretSanta
 			}
 		}
 
-#endregion
+		#endregion
 
+		#region Public Interface Properties
 		public string WebAPIUrl
 		{
 			get
@@ -102,5 +104,20 @@ namespace SecretSanta
 				}
 			}
 		}
+
+		public string DeviceID
+		{
+			get
+			{
+				if (_rm == null)
+					return ("");
+				else
+				{
+					return (_rm.GetString("DeviceID"));
+				}
+			}
+		}
+		
+		#endregion
 	}
 }

@@ -22,14 +22,14 @@ namespace SecretSanta.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class configDebug {
+    internal class configRelease {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal configDebug() {
+        internal configRelease() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace SecretSanta.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SecretSanta.Resources.configDebug", typeof(configDebug).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SecretSanta.Resources.configRelease", typeof(configRelease).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace SecretSanta.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to f0e41985566444ae9e814ddd00554d56.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string DeviceID {
             get {

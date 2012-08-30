@@ -67,19 +67,20 @@ namespace SecretSanta
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-			// get local resources
-			LocalResource lr = LocalResource.GetInstance;
-			// 2012/08/19 WSP: WebAPIUrl not used yet
-			Debug.WriteLine("WebAPIUrl = {0}", lr.WebAPIUrl);
-
 
 			LoadImages();
         }
 
-
+		/// <summary>
+		/// Each time the virtual Windows Phone environment is created,
+		/// the media library is empty. Since we also don't have a camera 
+		/// on the virtual Windows Phone, need to load the media library with 
+		/// pictures of QR codes & UPC codes needed to test application.
+		/// </summary>
         [Conditional("DEBUG")]
         private void LoadImages()
         {
+
             string[] filePaths = new string[5];
             filePaths[0] = @"Images\TestingImages\authentication-key-1-data-matrix.jpg";
             filePaths[1] = @"Images\TestingImages\authentication-key-1-QR.jpg";

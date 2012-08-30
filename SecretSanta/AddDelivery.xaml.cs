@@ -37,6 +37,7 @@ namespace SecretSanta
         private PhotoCameraLuminanceSource luminance;
         private Reader reader;
         private PhotoCamera photoCamera;
+		private LocalResource _localResx = null;
 
         public AddDelivery()
         {
@@ -74,6 +75,10 @@ namespace SecretSanta
                                             var bmp = (BitmapImage) s;
                                             scannerWorker.RunWorkerAsync(new WriteableBitmap(bmp));
                                          };
+
+			 // get local resources
+			 _localResx = LocalResource.GetInstance;
+
         }
 
         private void scannerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -209,7 +214,7 @@ namespace SecretSanta
             var settings = IsolatedStorageSettings.ApplicationSettings;
             string sessionKey = (string)settings["SessionKey"];
 
-            var request = HttpWebRequest.Create("http://127.0.0.1:81/api/Deliveries/" + deliveryId + "?key=" + sessionKey);
+            var request = HttpWebRequest.Create(_localResx.WebAPIUrl + "api/Deliveries/" + deliveryId + "?key=" + sessionKey);
             request.Method = "GET";
 
             request.BeginGetResponse(GetDeliveryWeb_Completed, request);

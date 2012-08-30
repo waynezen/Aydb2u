@@ -11,12 +11,18 @@ namespace SecretSanta
 {
     public partial class RegisterDevice : PhoneApplicationPage
     {
-        private IsolatedStorageSettings settings; 
+        private IsolatedStorageSettings settings;
+
+		private LocalResource _localResx = null;
+
         // Constructor
         public RegisterDevice()
         {
             InitializeComponent();
             settings = IsolatedStorageSettings.ApplicationSettings;
+
+			// get local resources
+			_localResx = LocalResource.GetInstance;
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -49,7 +55,8 @@ namespace SecretSanta
 
                 if (string.IsNullOrEmpty(deviceID))
                 {
-                    deviceID = Guid.NewGuid().ToString();
+					deviceID = _localResx.DeviceID;
+					//deviceID = Guid.NewGuid().ToString();
                 }
 
                 settings.Add("DeviceId", deviceID);
