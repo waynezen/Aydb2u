@@ -84,9 +84,9 @@ namespace SecretSanta
             string[] filePaths = new string[5];
             filePaths[0] = @"Images\TestingImages\authentication-key-1-data-matrix.jpg";
             filePaths[1] = @"Images\TestingImages\authentication-key-1-QR.jpg";
-            filePaths[2] = @"Images\TestingImages\12-3D63EEA2.jpg";
-            filePaths[3] = @"Images\TestingImages\12-3D243CD0.jpg";
-            filePaths[4] = @"Images\TestingImages\12-3BF4F6E4.jpg";
+			filePaths[2] = @"Images\TestingImages\Zone1-12-3D243CD0.jpg";
+			filePaths[3] = @"Images\TestingImages\Zone1-12-3BF4F6E4.jpg";
+			filePaths[4] = @"Images\TestingImages\Zone1-12-3D63EEA2.jpg";
 
             var myMediaLibrary = new MediaLibrary();
 

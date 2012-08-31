@@ -70,7 +70,7 @@ namespace SecretSanta.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://a273ae8c17854d5bace8d740642081f6.cloudapp.net/.
+        ///   Looks up a localized string similar to http://localhost:81/.
         /// </summary>
         internal static string WebAPIUrl {
             get {
