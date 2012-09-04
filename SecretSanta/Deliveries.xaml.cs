@@ -45,6 +45,11 @@ namespace SecretSanta
         {
             NavigationService.Navigate(new Uri("/AddDelivery.xaml", UriKind.Relative));
         }
+
+        private void ApplicationBarIconDeliverButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Deliver.xaml", UriKind.Relative));
+        }
         
     }
 

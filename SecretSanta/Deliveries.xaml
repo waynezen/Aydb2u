@@ -25,7 +25,7 @@
             <TextBlock x:Name="ApplicationTitle" Text="Secret Santa" Style="{StaticResource PhoneTextNormalStyle}"/>
             <Grid x:Name="TitleGrid" Width="Auto">
                 <TextBlock x:Name="PageTitle" Text="Deliveries" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="64" VerticalAlignment="Bottom" />
-                <Image Width="100" Height="100" Name="imageChristmasBureau" Stretch="Fill"  Source="/SecretSanta;component/Images/Santa-256.png" HorizontalAlignment="Right" />
+                <Image Width="100" Height="100" Name="imageChristmasBureau" Stretch="Fill"  Source="Images/Santa-256.png" HorizontalAlignment="Right" />
             </Grid>
         </StackPanel>
         <ListBox Name="DeliveryList" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" >
@@ -60,7 +60,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png" Text="Add Address" Click="ApplicationBarIconAddDeliveryButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.share.rest.png" Text="Deliver Package" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.share.rest.png" Text="Deliver Package" Click="ApplicationBarIconDeliverButton_Click" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png" Text="Refresh"/>
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.questionmark.rest.png" Text="Help"/>
         </shell:ApplicationBar>

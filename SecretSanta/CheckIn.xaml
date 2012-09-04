@@ -23,31 +23,15 @@
                 <TextBlock x:Name="ApplicationTitle" Text="Secret Santa" Style="{StaticResource PhoneTextNormalStyle}"/>
                 <Grid x:Name="TitleGrid" Width="Auto">
                     <TextBlock x:Name="PageTitle" Text="Check In" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="64" VerticalAlignment="Bottom" />
-                    <Image Width="100" Height="100" Name="imageChristmasBureau" Stretch="Fill"  Source="/SecretSanta;component/Images/Santa-256.png" HorizontalAlignment="Right" />
+                    <Image Width="100" Height="100" Name="imageChristmasBureau" Stretch="Fill"  Source="/Images/Santa-256.png" HorizontalAlignment="Right" />
                 </Grid>
             </StackPanel>
-            <Image x:Name="BarcodeImage" Width="300" Height="300"/>
-            <Rectangle x:Name="previewRect" 
-                    Margin="0" 
-                    Height="300"
-                    Width="300" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Visibility="Collapsed">
-                <Rectangle.Fill>
-                    <VideoBrush x:Name="previewVideo">
-                        <VideoBrush.RelativeTransform>
-                            <CompositeTransform  
-                        x:Name="previewTransform" CenterX=".5" CenterY=".5" />
-                        </VideoBrush.RelativeTransform>
-                    </VideoBrush>
-                </Rectangle.Fill>
-            </Rectangle>
+            <Image x:Name="BarcodeImage" Width="300" Height="300" Source="/Images/appbar.feature.camera.rest.png"/>
             <Grid x:Name="LayoutButtons" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="CheckInButton" Content="Check In" FontSize="26" FontWeight="ExtraBold" Height="75" Width="250" />
+                <Button x:Name="CheckInButton" Content="Check In" FontSize="26" FontWeight="ExtraBold" Height="75" Width="250"  Click="CheckInButton_Click" />
             </Grid>
             <Grid x:Name="ProgressMeter" Background="Transparent" Visibility="Collapsed" >
                 <Grid.RowDefinitions>
@@ -57,7 +41,7 @@
                 <ProgressBar Name="ProgressBar" IsIndeterminate="True" Grid.Row="0" VerticalAlignment="Bottom" Margin="0,10,0,0" Height="21" HorizontalAlignment="Center" Width="268" />
                 <TextBlock Name="BlockStatus" HorizontalAlignment="Center" Text="Checking In..." Grid.Row="1" VerticalAlignment="Bottom" />
             </Grid>
-            <TextBlock x:Name="Message" FontSize="26" MinHeight="80" TextWrapping="Wrap" />
+            <TextBlock x:Name="Message" FontSize="26" MinHeight="80" TextWrapping="Wrap" TextAlignment="Center" />
         </StackPanel>
     </Grid>
  </phone:PhoneApplicationPage>

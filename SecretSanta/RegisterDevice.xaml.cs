@@ -4,8 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
-using System.Diagnostics;
-using Microsoft.Xna.Framework.Media;
+using Microsoft.Phone.Info;
 
 namespace SecretSanta
 {
@@ -13,16 +12,10 @@ namespace SecretSanta
     {
         private IsolatedStorageSettings settings;
 
-		private LocalResource _localResx = null;
-
-        // Constructor
         public RegisterDevice()
         {
             InitializeComponent();
             settings = IsolatedStorageSettings.ApplicationSettings;
-
-			// get local resources
-			_localResx = LocalResource.GetInstance;
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -34,7 +27,7 @@ namespace SecretSanta
 
                 BackgroundWorker bg = new BackgroundWorker();
                 bg.DoWork += new DoWorkEventHandler(GetDeviceId);
-                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_GetDeviceIdComplete);
+                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(GetDeviceId_Complete);
                 bg.RunWorkerAsync();
             }
             else
@@ -43,29 +36,28 @@ namespace SecretSanta
             }
         }
 
-        void GetDeviceId(object sender, DoWorkEventArgs args)
+        private void GetDeviceId(object sender, DoWorkEventArgs args)
         {
-                object uniqueID;
-                string deviceID = "";
-                if (Microsoft.Phone.Info.DeviceExtendedProperties.TryGetValue("DeviceUniqueID", out uniqueID) == true)
-                {
-                    byte[] bID = (byte[])uniqueID;
-                    deviceID = Convert.ToBase64String(bID);   // There you go
-                }
+            object uniqueID;
+            string deviceID = "";
+            if (DeviceExtendedProperties.TryGetValue("DeviceUniqueID", out uniqueID) == true)
+            {
+                byte[] bID = (byte[])uniqueID;
+                deviceID = Convert.ToBase64String(bID);
+            }
 
-                if (string.IsNullOrEmpty(deviceID))
-                {
-					deviceID = _localResx.DeviceID;
-					//deviceID = Guid.NewGuid().ToString();
-                }
 
-                settings.Add("DeviceId", deviceID);
-                settings.Save();
-                System.Threading.Thread.Sleep(6000);
+            if (string.IsNullOrEmpty(deviceID))
+            {
+                // If no device Id is provided we create one.
+                deviceID = Guid.NewGuid().ToString();
+            }
 
+            settings.Add("DeviceId", deviceID);
+            settings.Save();
         }
 
-        void bg_GetDeviceIdComplete(object sender, RunWorkerCompletedEventArgs args)
+        private void GetDeviceId_Complete(object sender, RunWorkerCompletedEventArgs args)
         {
             ProgressBar.Visibility = Visibility.Collapsed;
             BlockStatus.Text = "Device Registered";
@@ -73,11 +65,8 @@ namespace SecretSanta
             Navigate();
         }
 
-        void Navigate()
+        private void Navigate()
         {
-            // Choose where to Go
-            var settings = IsolatedStorageSettings.ApplicationSettings;
-            
             string sessionKey = "";
             var results = settings.TryGetValue<string>("SessionKey", out sessionKey);
 
