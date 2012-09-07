@@ -34,7 +34,6 @@ namespace SecretSanta
             imager = new Imaging(BarcodeImage, imaging_RunWorkerCompleted);
         }
 
-
         private void AddDeliveryButton_Click(object sender, RoutedEventArgs e)
         {
             imager.Show();
@@ -56,7 +55,7 @@ namespace SecretSanta
             }
             else
             {
-                Message.Text = "No barcode found.";
+                Message.Text = "No barcode found. Please try again.";
             }
         }
 
@@ -80,33 +79,52 @@ namespace SecretSanta
 
         private void GetDeliveryWeb(string deliveryId)
         {
-            var settings = IsolatedStorageSettings.ApplicationSettings;
-            string sessionKey = (string)settings["SessionKey"];
+            try
+            {
+                var settings = IsolatedStorageSettings.ApplicationSettings;
+                string sessionKey = (string)settings["SessionKey"];
 
-            var request = System.Net.HttpWebRequest.Create(_localResx.WebAPIUrl + "api/Deliveries/" + deliveryId + "?key=" + sessionKey);
-            request.Method = "GET";
+                var request = System.Net.HttpWebRequest.Create(_localResx.WebAPIUrl + "api/Deliveries/" + deliveryId + "?key=" + sessionKey);
+                request.Method = "GET";
 
-            request.BeginGetResponse(GetDeliveryWeb_Completed, request);
+                request.BeginGetResponse(GetDeliveryWeb_Completed, request);
+            }
+            catch (Exception ex)
+            {
+                Message.Text = "Could not connect to Internet. Please try again.";
+
+                LayoutButtons.Visibility = System.Windows.Visibility.Visible;
+                ProgressMeter.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
         private void GetDeliveryWeb_Completed(IAsyncResult result)
         {
-            var request = (HttpWebRequest)result.AsyncState;
-            var response = (HttpWebResponse)request.EndGetResponse(result);
-
-            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+            try
             {
-                string responseString = streamReader.ReadToEnd();
-                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responseString)))
+                var request = (HttpWebRequest)result.AsyncState;
+                var response = (HttpWebResponse)request.EndGetResponse(result);
+
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
                 {
-                    var ser = new DataContractJsonSerializer(typeof(Delivery));
-                    var deliveryResult = (Delivery)ser.ReadObject(ms);
+                    string responseString = streamReader.ReadToEnd();
+                    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responseString)))
+                    {
+                        var ser = new DataContractJsonSerializer(typeof(Delivery));
+                        var deliveryResult = (Delivery)ser.ReadObject(ms);
 
-                    DeliveryData.SaveDeliveryToLocal(deliveryResult);
+                        new DeliveryData().SaveDeliveryToLocal(deliveryResult);
+                    }
                 }
-            }
 
-            Deployment.Current.Dispatcher.BeginInvoke(() => { NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative)); });
+                Deployment.Current.Dispatcher.BeginInvoke(() => { NavigationService.Navigate(new Uri("/Deliveries.xaml", UriKind.Relative)); });
+            }
+            catch (Exception ex)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() => { Message.Text = "Invalid delivery barcode. Please try again."; });
+                Deployment.Current.Dispatcher.BeginInvoke(() => { LayoutButtons.Visibility = System.Windows.Visibility.Visible; });
+                Deployment.Current.Dispatcher.BeginInvoke(() => { ProgressMeter.Visibility = System.Windows.Visibility.Collapsed; });
+            }
         }
 
     }

@@ -69,7 +69,7 @@ namespace SecretSanta
             }
             catch (Exception ex)
             {
-                Message.Text = "Could not connect to Internet.";
+                Message.Text = "Could not connect to Internet. Please try again.";
 
                 LayoutButtons.Visibility = System.Windows.Visibility.Visible;
                 ProgressMeter.Visibility = System.Windows.Visibility.Collapsed;
@@ -101,7 +101,7 @@ namespace SecretSanta
             }
             catch (Exception ex)
             {
-                Deployment.Current.Dispatcher.BeginInvoke(() => { Message.Text = "Invalid Barcode. Please try again."; });
+                Deployment.Current.Dispatcher.BeginInvoke(() => { Message.Text = "Invalid check in barcode. Please try again."; });
                 Deployment.Current.Dispatcher.BeginInvoke(() => { LayoutButtons.Visibility = System.Windows.Visibility.Visible; });
                 Deployment.Current.Dispatcher.BeginInvoke(() => { ProgressMeter.Visibility = System.Windows.Visibility.Collapsed; });
             }
@@ -111,14 +111,14 @@ namespace SecretSanta
         {
             if (result != null)
             {
+                Message.Text = string.Empty;
                 CheckInWeb(result.Text);
-
                 LayoutButtons.Visibility = System.Windows.Visibility.Collapsed;
                 ProgressMeter.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
-                Message.Text = "No barcode found.";
+                Message.Text = "No barcode found. Please try again.";
             }
         }
 

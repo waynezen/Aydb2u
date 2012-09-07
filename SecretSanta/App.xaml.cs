@@ -88,18 +88,19 @@ namespace SecretSanta
 			filePaths[3] = @"Images\TestingImages\Zone1-12-3BF4F6E4.jpg";
 			filePaths[4] = @"Images\TestingImages\Zone1-12-3D63EEA2.jpg";
 
-            var myMediaLibrary = new MediaLibrary();
-
-            foreach (var filePath in filePaths)
+            using (var myMediaLibrary = new MediaLibrary())
             {
-                var name = System.IO.Path.GetFileName(filePath);
-                var myUri = new Uri(filePath, UriKind.RelativeOrAbsolute);
+                foreach (var filePath in filePaths)
+                {
+                    var name = System.IO.Path.GetFileName(filePath);
+                    var myUri = new Uri(filePath, UriKind.RelativeOrAbsolute);
 
-                var stream = App.GetResourceStream(myUri).Stream;
-                //var buffer = new byte[stream.Length];
+                    var stream = App.GetResourceStream(myUri).Stream;
+                    //var buffer = new byte[stream.Length];
 
-                //stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
-                myMediaLibrary.SavePicture(name, stream);
+                    //stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
+                    myMediaLibrary.SavePicture(name, stream);
+                }
             }
         }
 

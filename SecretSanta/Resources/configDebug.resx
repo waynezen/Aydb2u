@@ -121,7 +121,7 @@
     <value>f0e41985566444ae9e814ddd00554d56</value>
   </data>
   <data name="WebAPIUrl" xml:space="preserve">
-    <value>http://localhost:81/</value>
+    <value>http://a273ae8c17854d5bace8d740642081f6.cloudapp.net/</value>
     <comment>For local development, use: http://localhost:81/</comment>
   </data>
 </root>

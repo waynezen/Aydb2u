@@ -1,11 +1,15 @@
 ﻿using System.Runtime.Serialization;
 using System.Text;
+using System;
 
 namespace SecretSanta.CustomClasses
 {
     [DataContract]
     public class Address
     {
+        private double _latitude;
+        private double _longitude;
+
         [DataMember]
         public string UnitOrSuite { get; set; }
         [DataMember]
@@ -22,6 +26,40 @@ namespace SecretSanta.CustomClasses
         public string Province { get; set; }
         [DataMember]
         public string PostalCode { get; set; }
+
+        public double Latitude
+        {
+            get
+            {
+                if (_latitude == 0)
+                {
+                    var rand = new Random();
+                    _latitude = (rand.Next(1, 180) - 91) + rand.NextDouble();
+                }
+                return _latitude;
+            }
+            set
+            {
+                _latitude = value;
+            }
+        }
+
+        public double Longitude
+        {
+            get
+            {
+                if (_longitude == 0)
+                {
+                    var rand = new Random();
+                    _longitude = (rand.Next(1, 360) - 181) + rand.NextDouble();
+                }
+                return _longitude;
+            }
+            set
+            {
+                _longitude = value;
+            }
+        }
 
         public override string ToString()
         {
