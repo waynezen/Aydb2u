@@ -73,14 +73,15 @@ namespace SecretSanta.Storage
             }
             catch (Exception ex)
             {
+				// TODO: add logging with Log4Net
                 // Do nothing -- will attempt an update to web next time a local update is done.
             }           
         }
 
         private static void deliveryWebWorker_Completed(IAsyncResult result)
         {
-            //var request = (HttpWebRequest)result.AsyncState;
-            //var response = (HttpWebResponse)request.EndGetResponse(result);
+			var request = (HttpWebRequest)result.AsyncState;
+			var response = (HttpWebResponse)request.EndGetResponse(result);
             // Do Nothing
         }
     }

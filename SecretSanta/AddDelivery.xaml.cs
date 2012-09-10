@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
@@ -121,6 +122,9 @@ namespace SecretSanta
             }
             catch (Exception ex)
             {
+				// TODO: add logging with Log4Net
+				Debug.WriteLine(String.Format("AddDelivery error: {0}", ex.Message));
+
                 Deployment.Current.Dispatcher.BeginInvoke(() => { Message.Text = "Invalid delivery barcode. Please try again."; });
                 Deployment.Current.Dispatcher.BeginInvoke(() => { LayoutButtons.Visibility = System.Windows.Visibility.Visible; });
                 Deployment.Current.Dispatcher.BeginInvoke(() => { ProgressMeter.Visibility = System.Windows.Visibility.Collapsed; });

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{7a5dcc17-6a24-4634-88e8-9cb49cb294e3}" Title="SecretSanta" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="SecretSanta author" Description="Sample description" Publisher="SecretSanta">
+  <App xmlns="" ProductID="{7a5dcc17-6a24-4634-88e8-9cb49cb294e3}" Title="Secret Santa AYDB2U" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="SecretSanta author" Description="Sample description" Publisher="SecretSanta">
     <IconPath IsRelative="true" IsResource="false">Images\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />

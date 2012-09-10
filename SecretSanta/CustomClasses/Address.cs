@@ -27,39 +27,49 @@ namespace SecretSanta.CustomClasses
         [DataMember]
         public string PostalCode { get; set; }
 
+		[DataMember]
         public double Latitude
-        {
-            get
-            {
-                if (_latitude == 0)
-                {
-                    var rand = new Random();
-                    _latitude = (rand.Next(1, 180) - 91) + rand.NextDouble();
-                }
-                return _latitude;
-            }
-            set
-            {
-                _latitude = value;
-            }
-        }
+		{
+			get { return _latitude; }
+			set { _latitude = value; }
+		}
+		//{
+		//    get
+		//    {
+		//        if (_latitude == 0)
+		//        {
+		//            var rand = new Random();
+		//            _latitude = (rand.Next(1, 180) - 91) + rand.NextDouble();
+		//        }
+		//        return _latitude;
+		//    }
+		//    set
+		//    {
+		//        _latitude = value;
+		//    }
+		//}
 
+		[DataMember]
         public double Longitude
-        {
-            get
-            {
-                if (_longitude == 0)
-                {
-                    var rand = new Random();
-                    _longitude = (rand.Next(1, 360) - 181) + rand.NextDouble();
-                }
-                return _longitude;
-            }
-            set
-            {
-                _longitude = value;
-            }
-        }
+		{
+			get { return _longitude; }
+			set { _longitude = value; }
+		}
+		//{
+		//    get
+		//    {
+		//        if (_longitude == 0)
+		//        {
+		//            var rand = new Random();
+		//            _longitude = (rand.Next(1, 360) - 181) + rand.NextDouble();
+		//        }
+		//        return _longitude;
+		//    }
+		//    set
+		//    {
+		//        _longitude = value;
+		//    }
+		//}
 
         public override string ToString()
         {

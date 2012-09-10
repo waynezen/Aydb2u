@@ -31,6 +31,7 @@ namespace SecretSanta.CustomClasses
             } 
         }
 
+		[DataMember]
         public string Note
         {
             get
@@ -47,6 +48,7 @@ namespace SecretSanta.CustomClasses
             }
         }
 
+		[DataMember]
         public string SecondaryNote
         {
             get
@@ -63,6 +65,7 @@ namespace SecretSanta.CustomClasses
             }
         }
 
+		[DataMember]
         public string Comment
         {
             get
